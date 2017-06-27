@@ -1,6 +1,6 @@
 # Julia-Fractal
 This project uses javascript to generate a cool fractal
-Some of the code was adapted from C code written [here](http://lodev.org/cgtutor/juliamandelbrot.html)
+Some of the code was adapted from C code written [here](http://lodev.org/cgtutor/juliamandelbrot.html).
 It utilises sliders to allow the user to change the appearance
 
 #### Random
