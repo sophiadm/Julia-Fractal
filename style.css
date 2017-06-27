@@ -1,0 +1,12 @@
+﻿body {
+  background-color: white;
+  font-family: Comic Sans MS, cursive, sans-serif;
+}
+#myCanvas{
+  border: 2px solid teal;
+  height: 600px;
+  left: 50%;
+  margin-left: -300px;
+  position: absolute;
+  width: 600px;
+}
