@@ -1,37 +1,36 @@
-﻿
 function init(){
   var canvas = document.getElementById("myCanvas");
   height = canvas.height;
   width = canvas.width; 
 
   maxIterations = 20;
-  zoom = 1;
-  moveX = 0;
-  moveY = 0;  
 
   ctx = canvas.getContext("2d");
 }
-
 function start(){
   ctx.clearRect(0,0,height,width)
   var sliders = document.getElementsByTagName("input");
 
-  cRe = sliders[0].value / 20 - 2.5; // -0.06
-  cIm = sliders[1].value / 20 - 2.5; // -8.34
+  cRe = -2.5;
+  cIm = -2.5;
 
-  zoom = sliders[2].value / 10;
+  zoom = sliders[0].value / 10;
   if (zoom == 0){
     zoom = 0.1;
   }
  
-  moveX = sliders[3].value / 50 - 1;
-  moveY = sliders[4].value / 50 - 1;
+  moveX = sliders[1].value / 50 - 1;
+  moveY = sliders[2].value / 50 - 1;
 
-  var hueRange = sliders[5].value * 3.6;
-  var hues = sliders[6].value / 100 * (360 - hueRange);
-  var sat = sliders[7].value.toString(10);
-  var lit = sliders[8].value.toString(10);
+  hueRange = sliders[3].value * 3.6;
+  hues = sliders[4].value / 100 * (360 - hueRange);
+  sat = sliders[5].value.toString(10);
+  lit = sliders[6].value.toString(10);
+  
+  window.requestAnimationFrame(draw);
+}
 
+function draw(){
   for (var x=0; x<width; x++){
     for (var y=0; y<height; y++){
 
@@ -48,6 +47,11 @@ function start(){
         ctx.fillRect(x,y, 1,1); // Draw a pixel
       }
     }
+  }
+  cIm += 0.05
+  cRe += 0.05
+  if (cRe < 2.5){
+    window.requestAnimationFrame(draw, '100');
   }
 }
 
@@ -72,3 +76,4 @@ function colourdeterminator(x, y){
 }
 
 init();
+
