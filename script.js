@@ -6,28 +6,41 @@ function init(){
   maxIterations = 20;
 
   ctx = canvas.getContext("2d");
+  cont = false;
+  
+  cRe = -2.5;
+  cIm = -2.5;
+}
+function play(){
+  if (cont){
+    cont = false;
+	document.getElementById("playbutton").innerHTML = "play";
+  }
+  else {
+    cont = true;
+	document.getElementById("playbutton").innerHTML = "pause";
+	start();
+  }
 }
 function start(){
   ctx.clearRect(0,0,height,width)
   var sliders = document.getElementsByTagName("input");
 
-  cRe = -2.5;
-  cIm = -2.5;
+  speed = 101 - sliders[0].value;
 
-  zoom = sliders[0].value / 10;
+  zoom = sliders[1].value / 40 * sliders[1].value / 40;
   if (zoom == 0){
     zoom = 0.1;
   }
  
-  moveX = sliders[1].value / 50 - 1;
-  moveY = sliders[2].value / 50 - 1;
+  moveX = sliders[2].value / 50 - 1;
+  moveY = sliders[3].value / 50 - 1;
 
-  hueRange = sliders[3].value * 3.6;
-  hues = sliders[4].value / 100 * (360 - hueRange);
-  sat = sliders[5].value.toString(10);
-  lit = sliders[6].value.toString(10);
-  
-  window.requestAnimationFrame(draw);
+  hueRange = sliders[4].value * 3.6;
+  hues = sliders[5].value / 100 * (360 - hueRange);
+  sat = sliders[6].value.toString(10);
+  lit = sliders[7].value.toString(10);
+  window.requestAnimationFrame(draw);	
 }
 
 function draw(){
@@ -43,15 +56,24 @@ function draw(){
         var hue=((1-result)*hueRange + hues).toString(10);
         ctx.fillStyle = ["hsl(",hue,",",sat,"%,",lit,"%)"].join("");
 
-
         ctx.fillRect(x,y, 1,1); // Draw a pixel
       }
     }
   }
   cIm += 0.05
   cRe += 0.05
-  if (cRe < 2.5){
-    window.requestAnimationFrame(draw, '100');
+  
+  if (cRe >= 2.5){
+    cont = false;
+	document.getElementById("playbutton").innerHTML = "play";
+	
+	cRe = -2.5;
+	cIm = -2.5;
+  }
+  if (cont){
+    setTimeout(function() {
+      window.requestAnimationFrame(draw);
+	}, speed);
   }
 }
 
@@ -76,4 +98,3 @@ function colourdeterminator(x, y){
 }
 
 init();
-
